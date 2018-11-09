@@ -9,5 +9,5 @@ public class Articulo {
     @Id
     @Column(name = "articulo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 }
