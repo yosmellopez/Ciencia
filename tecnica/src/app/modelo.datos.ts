@@ -15,12 +15,27 @@ export class Rol {
     nombre: string;
 }
 
+export class Autor {
+    id: number;
+    nombre: string;
+    apellidos: string;
+}
+
 export class Area {
     id: number;
     nombre: string;
 }
 
 export class Articulo {
+    id: number;
+    titulo: string;
+    year: number;
+    grupo: Grupo;
+    area: Area;
+    autores: Autor[];
+}
+
+export class Grupo {
     id: number;
     nombre: string;
 }

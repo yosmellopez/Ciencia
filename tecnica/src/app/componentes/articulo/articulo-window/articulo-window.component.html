@@ -1,0 +1,41 @@
+<form class="form" [formGroup]="form" (submit)="insertarArticulo()">
+    <h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nueva Articulo':'Modificar Articulo'}}
+        <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">
+            <mat-icon style="font-size: 25px">close</mat-icon>
+        </button>
+        <hr>
+    </h1>
+    <div mat-dialog-content style="min-height: 100%;">
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="Seleccione el Area" formControlName="area" [compareWith]="compararAreas">
+                <mat-option *ngFor="let area of areas" [value]="area">{{area.nombre}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['area'].errors?.required">Debe seleccionar el area</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="Seleccione el Grupo" formControlName="grupo" [compareWith]="compararGrupos">
+                <mat-option *ngFor="let grupo of grupos" [value]="grupo">{{grupo.nombre}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['grupo'].errors?.required">Debe seleccionar el grupo</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Titulo del Articulo" formControlName="titulo">
+            <mat-error *ngIf="form.controls['titulo'].errors?.required">Debe insertar el titulo del articulo</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input type="number" matInput placeholder="Año del Articulo" formControlName="year">
+            <mat-error *ngIf="form.controls['year'].errors?.required">Debe insertar el año del articulo</mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="boton-theme">
+        <span class="spacer"></span>
+        <button type="submit" mat-raised-button cdkFocusInitial color="primary">
+            <mat-icon>check_circle</mat-icon>
+            {{insertar?'Guardar':'Modificar'}}
+        </button>
+        <button type="button" mat-raised-button (click)="onNoClick()" color="warn">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+    </div>
+</form>

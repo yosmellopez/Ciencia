@@ -86,6 +86,10 @@ public class Articulo implements Serializable, EntidadClonable<Articulo> {
 
     @Override
     public void clonar(Articulo articulo) {
-
+        titulo = articulo.titulo;
+        year = articulo.year;
+        area = articulo.area;
+        grupo = articulo.grupo;
+        autores = articulo.autores;
     }
 }

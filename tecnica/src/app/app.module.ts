@@ -15,6 +15,9 @@ import {MensajeModule} from "./mensaje/mensaje.module";
 import {AngularMaterialModule} from "./services/material.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ReactiveFormsModule} from "@angular/forms";
+import {ArticuloWindow} from './componentes/articulo/articulo-window/articulo-window.component';
+import {PipesModule} from "./pipes/pipes.module";
+import { CenterComponent } from './componentes/layout/center/center.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +28,9 @@ import {ReactiveFormsModule} from "@angular/forms";
         AutorComponent,
         HeaderComponent,
         FooterComponent,
-        AreaWindow
+        AreaWindow,
+        ArticuloWindow,
+        CenterComponent
     ],
     imports: [
         BrowserModule,
@@ -35,8 +40,10 @@ import {ReactiveFormsModule} from "@angular/forms";
         AngularMaterialModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
+        PipesModule,
+        BrowserAnimationsModule
     ],
-    entryComponents: [AreaWindow],
+    entryComponents: [AreaWindow, ArticuloWindow],
     providers: [],
     bootstrap: [AppComponent]
 })

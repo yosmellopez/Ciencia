@@ -1,0 +1,92 @@
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+<div id="main">
+    <!-- START WRAPPER -->
+    <div class="wrapper">
+        <!-- START LEFT SIDEBAR NAV-->
+        <aside id="left-sidebar-nav" style="width: 300px">
+            <ul id="slide-out" class="side-nav fixed leftside-navigation">
+                <li class="user-details cyan darken-2">
+                    <div class="row">
+                        <div class="col col s8 m8 l8">
+                            <ul id="profile-dropdown-nav" class="dropdown-content" style="width: 200px;z-index: 10000000000">
+                                <li>
+                                    <a routerLink="/user-profile" class="grey-text text-darken-1">
+                                        <i class="material-icons">face</i> Perfil de Usuario</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="grey-text text-darken-1">
+                                        <i class="material-icons">settings</i> Configuracion</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="grey-text text-darken-1">
+                                        <i class="material-icons">live_help</i> Ayuda</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#" class="grey-text text-darken-1">
+                                        <i class="material-icons">lock_outline</i> Bloquear</a>
+                                </li>
+                                <li>
+                                    <a class="grey-text text-darken-1" (click)="cerrarSession()">
+                                        <i class="material-icons">keyboard_tab</i> Cerrar Sesion</a>
+                                </li>
+                            </ul>
+                            <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown-nav">{{usuario|usuario}}<i class="mdi-navigation-arrow-drop-down right"></i></a>
+                            <p class="user-roal">{{rol|async}}</p>
+                        </div>
+                        <div class="col col s4 m4 l4">
+                            <img src="/assets/images/avatar/avatar-7.png" alt="" class="circle responsive-img valign profile-image cyan">
+                        </div>
+                    </div>
+                </li>
+                <li class="no-padding">
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <li class="bold" *ngFor="let menuItem of rutasUsuario">
+                            <a [routerLink]="menuItem.path" [class]="menuItem.class">
+                                <i class="material-icons">{{menuItem.icon}}</i>
+                                <span class="nav-text">{{menuItem.title}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only">
+                <i class="material-icons">menu</i>
+            </a>
+        </aside>
+        <!-- END LEFT SIDEBAR NAV-->
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
+        <!-- START CONTENT -->
+        <section id="content" style="z-index: 10000" class="animated fadeIn">
+            <!--breadcrumbs start-->
+            <div id="breadcrumbs-wrapper">
+                <!-- Search for small screen -->
+                <div class="header-search-wrapper grey lighten-2 hide-on-large-only">
+                    <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col s10 m6 l6">
+                            <h5 class="breadcrumbs-title" [ngClass]="routeAnimationsElements">{{getTitle()}}</h5>
+                            <ol class="breadcrumbs">
+                                <li><a href="index.html">Dashboard</a></li>
+                                <li><a href="#">Tables</a></li>
+                                <li class="active">{{titulo}}</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="section">
+                    <router-outlet #o="outlet"></router-outlet>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- END WRAPPER -->
+</div>

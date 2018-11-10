@@ -5,24 +5,14 @@ import {Route, RouterModule} from "@angular/router";
 import {ArticuloComponent} from "./componentes/articulo/articulo.component";
 import {AreaComponent} from "./componentes/area/area.component";
 import {AutorComponent} from "./componentes/autor/autor.component";
+import {UsuarioComponent} from "./componentes/usuario/usuario.component";
 
 const routes: Route[] = [
-    {path: '', redirectTo: '/inicio', pathMatch: 'full'},
-    {path: 'inicio', component: ArticuloComponent},
-    {path: 'area', component: AreaComponent},
-    {path: 'autor', component: AutorComponent},
-    // {
-    //   path: '',
-    //   component: AdminComponent,
-    //   canActivate: [AdminGuard],
-    //   children: [{path: 'admin', loadChildren: './admin/admin.module#AdminModule'}]
-    // },
-    // {
-    //   path: '',
-    //   canActivate: [UsuarioGuard],
-    //   component: ComunComponent,
-    //   children: [{path: '', loadChildren: './comun/comun.module#ComunModule'}]
-    // }
+    {path: '', redirectTo: '/articulos', pathMatch: 'full'},
+    {path: 'articulos', component: ArticuloComponent},
+    {path: 'areas', component: AreaComponent},
+    {path: 'autores', component: AutorComponent},
+    {path: 'usuarios', component: UsuarioComponent},
 ];
 
 @NgModule({
