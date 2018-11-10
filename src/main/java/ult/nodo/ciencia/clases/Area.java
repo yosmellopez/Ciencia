@@ -36,6 +36,6 @@ public class Area implements Serializable, EntidadClonable<Area> {
 
     @Override
     public void clonar(Area area) {
-
+        nombre = area.nombre;
     }
 }

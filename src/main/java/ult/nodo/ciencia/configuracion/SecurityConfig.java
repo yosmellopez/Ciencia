@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ult.nodo.ciencia.AppConstants;
 import ult.nodo.ciencia.seguridad.AjaxLoginProcessingFilter;
 import ult.nodo.ciencia.seguridad.AutenticacionAjaxExitosa;
 import ult.nodo.ciencia.seguridad.AutenticacionAjaxFallida;
@@ -24,7 +23,6 @@ import ult.nodo.ciencia.seguridad.CustomCorsFilter;
 import ult.nodo.ciencia.seguridad.jwt.JwtAuthenticationProvider;
 import ult.nodo.ciencia.seguridad.jwt.JwtTokenAuthenticationProcessingFilter;
 import ult.nodo.ciencia.seguridad.jwt.SkipPathRequestMatcher;
-import ult.nodo.ciencia.seguridad.jwt.TokenProvider;
 import ult.nodo.ciencia.seguridad.jwt.token.TokenExtractor;
 
 import java.util.Arrays;
@@ -40,9 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
-    @Autowired
-    private TokenProvider tokenProvider;
 
     @Autowired
     private TokenExtractor tokenExtractor;
@@ -74,11 +69,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(AUTHENTICATION_URL).permitAll()
                 .antMatchers(LOGOUT_URL).permitAll()
                 .antMatchers("/api/auth/autenticated").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/index.html").fullyAuthenticated()
                 .and()
                 .addFilterBefore(new CustomCorsFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(buildAjaxLoginProcessingFilter(AUTHENTICATION_URL), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(permitAllEndpointList, API_ROOT_URL), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(buildAjaxLoginProcessingFilter(AUTHENTICATION_URL), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(permitAllEndpointList, API_ROOT_URL), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .accessDeniedPage("/denegado.html").and()
                 .sessionManagement()

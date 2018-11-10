@@ -1,1 +1,88 @@
 /* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+table {
+    width: 100%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.middle-width {
+    width: 48%;
+}
+
+.middle-width:nth-child(2n+1) {
+    margin-right: 20px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.spacer-right {
+    margin-right: 50px;
+}
+
+.card-actions button:first-child {
+    margin-right: 5px;
+}
+
+.close-button {
+    float: right;
+    clear: right;
+    position: relative;
+    right: -6px;
+    top: -7px;
+}
+
+mat-card-content {
+    min-height: 550px;
+}
+
+mat-paginator {
+    margin-right: 30px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.boton {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+}
+
+.rotate-180 {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+}
+
+.mat-dialog-actions {
+    padding-bottom: 15px;
+}
+
+.blue-snackbar {
+    background: #ded1d1;
+    color: #000;
+    position: relative;
+    bottom: 30px;
+    left: 30px;
+}
+
+.mat-snack-bar-container {
+    padding: 0;
+}
+
+snack-bar-container {
+    padding: 0;
+}
+
+#notifications-dropdown li {
+    min-width: 290px;
+}
