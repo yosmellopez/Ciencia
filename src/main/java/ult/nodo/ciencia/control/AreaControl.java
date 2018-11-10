@@ -1,7 +1,6 @@
 package ult.nodo.ciencia.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +32,6 @@ public class AreaControl {
     @Autowired
     private AreaRepositorio areaRepository;
 
-    @Autowired
-    private MessageSource messageSource;
-
     @GetMapping(value = "/area")
     public ResponseEntity<AppResponse<Area>> listarAreas(Pageable pageable) {
         Page<Area> areas = areaRepository.findAll(pageable);
@@ -66,25 +62,25 @@ public class AreaControl {
     public ResponseEntity<AppResponse> eliminarArea(@PathVariable("idArea") Optional<Area> optional, Locale locale) {
         Area area = optional.orElseThrow(() -> new EntityNotFoundException("area_not_found"));
         areaRepository.delete(area);
-        return ResponseEntity.ok(success(messageSource.getMessage("delete_area", null, locale)).total(areaRepository.count()).build());
+        return ResponseEntity.ok(success("Area eliminada correctamente.").total(areaRepository.count()).build());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<AppResponse> tratarExcepciones(EntityNotFoundException e, Locale locale) {
-        return ResponseEntity.ok(failure(messageSource.getMessage(e.getMessage(), null, locale)).build());
+        return ResponseEntity.ok(failure(e.getMessage()).build());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<AppResponse> tratarValidacion(MethodArgumentNotValidException ex, Locale locale) {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-        String mensaje = fieldErrors.parallelStream().map(error -> messageSource.getMessage(error.getDefaultMessage(), null, locale)).collect(Collectors.joining(", "));
+        String mensaje = fieldErrors.parallelStream().map(error -> error.getDefaultMessage()).collect(Collectors.joining(", "));
         return ResponseEntity.ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<AppResponse> tratarValidacion(ConstraintViolationException ex, Locale locale) {
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
-        String mensaje = violations.parallelStream().map(error -> messageSource.getMessage(error.getMessage(), null, locale)).collect(Collectors.joining(", "));
+        String mensaje = violations.parallelStream().map(error -> error.getMessage()).collect(Collectors.joining(", "));
         return ResponseEntity.ok(failure(mensaje).build());
     }
 
