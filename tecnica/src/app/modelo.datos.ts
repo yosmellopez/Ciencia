@@ -15,6 +15,16 @@ export class Rol {
   nombre: string;
 }
 
+export class Area {
+  id: number;
+  nombre: string;
+}
+
+export class Articulo {
+  id: number;
+  nombre: string;
+}
+
 export class ObjectParam<T> {
   object: T;
 }
