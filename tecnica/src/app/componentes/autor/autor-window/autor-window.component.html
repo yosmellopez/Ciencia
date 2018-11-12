@@ -1,0 +1,29 @@
+<form class="form" [formGroup]="form" (submit)="insertarAutor()">
+    <h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nuevo Autor':'Modificar Autor'}}
+        <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">
+            <mat-icon style="font-size: 25px">close</mat-icon>
+        </button>
+        <hr>
+    </h1>
+    <div mat-dialog-content style="min-height: 100%;">
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Nombre del Autor" formControlName="nombre">
+            <mat-error *ngIf="form.controls['nombre'].errors?.required">Debe insertar el nombre del autor</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Apellidos del Autor" formControlName="apellidos">
+            <mat-error *ngIf="form.controls['apellidos'].errors?.required">Debe insertar los apellidos del autor</mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="boton-theme">
+        <span class="spacer"></span>
+        <button type="submit" mat-raised-button cdkFocusInitial color="primary">
+            <mat-icon>check_circle</mat-icon>
+            {{insertar?'Guardar':'Modificar'}}
+        </button>
+        <button type="button" mat-raised-button (click)="onNoClick()" color="warn">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+    </div>
+</form>

@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.ResponseEntity.ok;
 import static ult.nodo.ciencia.control.AppResponse.failure;
 import static ult.nodo.ciencia.control.AppResponse.success;
 
@@ -44,19 +45,13 @@ public class ArticuloControl {
     @GetMapping(value = "/articulo")
     public ResponseEntity<AppResponse<Articulo>> listarArticulos(Pageable pageable) {
         Page<Articulo> articulos = articuloRepository.findAll(pageable);
-        return ResponseEntity.ok(success(articulos.getContent()).total(articulos.getTotalElements()).build());
-    }
-
-    @GetMapping(value = "/articulo/all")
-    public ResponseEntity<AppResponse<Articulo>> listarAllArticulos() {
-        List<Articulo> articulos = articuloRepository.findAll();
-        return ResponseEntity.ok(success(articulos).total(articulos.size()).build());
+        return ok(success(articulos.getContent()).total(articulos.getTotalElements()).build());
     }
 
     @PostMapping(value = "/articulo")
     public ResponseEntity<AppResponse<Articulo>> insertarArticulo(@Valid @RequestBody Articulo articulo) {
         articuloRepository.saveAndFlush(articulo);
-        return ResponseEntity.ok(success(articulo).build());
+        return ok(success(articulo).build());
     }
 
     @PutMapping(value = "/articulo/{idArticulo}")
@@ -64,44 +59,44 @@ public class ArticuloControl {
         Articulo articuloBd = optional.orElseThrow(() -> new EntityNotFoundException("articulo_not_found"));
         articuloBd.clonar(articulo);
         articuloRepository.saveAndFlush(articuloBd);
-        return ResponseEntity.ok(success(articuloBd).build());
+        return ok(success(articuloBd).build());
     }
 
     @DeleteMapping(value = "/articulo/{idArticulo}")
     public ResponseEntity<AppResponse> eliminarArticulo(@PathVariable("idArticulo") Optional<Articulo> optional, Locale locale) {
         Articulo articulo = optional.orElseThrow(() -> new EntityNotFoundException("articulo_not_found"));
         articuloRepository.delete(articulo);
-        return ResponseEntity.ok(success("Articulo eliminado correctamente.").total(articuloRepository.count()).build());
+        return ok(success("Articulo eliminado correctamente.").total(articuloRepository.count()).build());
     }
 
     @GetMapping(value = "/grupo")
     public ResponseEntity<AppResponse<Articulo>> listarGrupos() {
         List<Grupo> articulos = grupoRepositorio.findAll();
-        return ResponseEntity.ok(success(articulos).build());
+        return ok(success(articulos).build());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<AppResponse> tratarExcepciones(EntityNotFoundException e, Locale locale) {
-        return ResponseEntity.ok(failure(e.getMessage()).build());
+        return ok(failure(e.getMessage()).build());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<AppResponse> tratarValidacion(MethodArgumentNotValidException ex, Locale locale) {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         String mensaje = fieldErrors.parallelStream().map(error -> error.getDefaultMessage()).collect(Collectors.joining(", "));
-        return ResponseEntity.ok(failure(mensaje).build());
+        return ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<AppResponse> tratarValidacion(ConstraintViolationException ex, Locale locale) {
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
         String mensaje = violations.parallelStream().map(error -> error.getMessage()).collect(Collectors.joining(", "));
-        return ResponseEntity.ok(failure(mensaje).build());
+        return ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<AppResponse> tratarExcepcion(Exception e, Locale locale) {
         GeneralException exception = new ArticuloException(e.getCause());
-        return ResponseEntity.ok(failure(exception.tratarExcepcion()).build());
+        return ok(failure(exception.tratarExcepcion()).build());
     }
 }

@@ -1,12 +1,13 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
+import {Autor} from "../modelo.datos";
 
 @Pipe({
-  name: 'autor'
+    name: 'autor'
 })
 export class AutorPipe implements PipeTransform {
 
-  transform(value: any, args?: any): any {
-    return null;
-  }
+    transform(value: Autor, args?: any): any {
+        return value == null ? "" : value.nombre + " " + value.apellidos;
+    }
 
 }

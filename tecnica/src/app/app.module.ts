@@ -17,7 +17,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ArticuloWindow} from './componentes/articulo/articulo-window/articulo-window.component';
 import {PipesModule} from "./pipes/pipes.module";
-import { CenterComponent } from './componentes/layout/center/center.component';
+import {CenterComponent} from './componentes/layout/center/center.component';
+import {AutorWindow} from './componentes/autor/autor-window/autor-window.component';
+import {SelectFilterComponent} from "./select-filter/select-filter.component";
 
 @NgModule({
     declarations: [
@@ -30,7 +32,9 @@ import { CenterComponent } from './componentes/layout/center/center.component';
         FooterComponent,
         AreaWindow,
         ArticuloWindow,
-        CenterComponent
+        CenterComponent,
+        AutorWindow,
+        SelectFilterComponent
     ],
     imports: [
         BrowserModule,
@@ -43,7 +47,7 @@ import { CenterComponent } from './componentes/layout/center/center.component';
         PipesModule,
         BrowserAnimationsModule
     ],
-    entryComponents: [AreaWindow, ArticuloWindow],
+    entryComponents: [AreaWindow, ArticuloWindow, AutorWindow],
     providers: [],
     bootstrap: [AppComponent]
 })

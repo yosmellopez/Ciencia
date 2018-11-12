@@ -1,11 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 import {MensajeError} from "../../../mensaje/window.mensaje";
 import {ArticuloService} from "../../../services/articulo.service";
-import {Area, Articulo, Grupo} from "../../../modelo.datos";
+import {Area, Articulo, Autor, Grupo} from "../../../modelo.datos";
 import {AreaService} from "../../../services/area.service";
 import {GrupoService} from "../../../services/grupo.service";
+import {AutorService} from "../../../services/autor.service";
 
 @Component({
     selector: 'app-articulo-window',
@@ -19,9 +20,13 @@ export class ArticuloWindow implements OnInit {
     form: FormGroup;
     grupos: Grupo[] = [];
     areas: Area[] = [];
+    autores: Autor[] = [];
+    autoresFiltrados: Autor[] = [];
+    @ViewChild("control")
+    input: ElementRef;
 
-    constructor(public dialogRef: MatDialogRef<ArticuloWindow>, @Inject(MAT_DIALOG_DATA) {id, titulo, area, grupo, year}: Articulo,
-                private service: ArticuloService, private dialog: MatDialog, private areaService: AreaService, private grupoService: GrupoService) {
+    constructor(public dialogRef: MatDialogRef<ArticuloWindow>, @Inject(MAT_DIALOG_DATA) {id, titulo, area, grupo, year, autores}: Articulo,
+                private service: ArticuloService, private dialog: MatDialog, private areaService: AreaService, private grupoService: GrupoService, private autorService: AutorService) {
         if (id)
             this.insertar = false;
         this.idUser = id;
@@ -30,6 +35,7 @@ export class ArticuloWindow implements OnInit {
             year: new FormControl(year, [Validators.required]),
             area: new FormControl(area, [Validators.required]),
             grupo: new FormControl(grupo, [Validators.required]),
+            autores: new FormControl(autores, [Validators.required]),
         });
     }
 
@@ -71,6 +77,17 @@ export class ArticuloWindow implements OnInit {
                 this.areas = resp.body.elementos;
             }
         });
+        this.autorService.listarAllAutores().subscribe(resp => {
+            if (resp.body.success) {
+                this.autores = resp.body.elementos;
+                this.autoresFiltrados = resp.body.elementos;
+            }
+        });
+    }
+
+    filtrarSelect(event: Event) {
+        let value = this.input.nativeElement.value;
+        this.autoresFiltrados = this.autores.filter(autor => autor.nombre.includes(value));
     }
 
     compararAreas(inicio: Area, fin: Area) {

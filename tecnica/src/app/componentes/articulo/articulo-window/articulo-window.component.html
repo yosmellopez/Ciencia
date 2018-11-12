@@ -26,6 +26,15 @@
             <input type="number" matInput placeholder="Año del Articulo" formControlName="year">
             <mat-error *ngIf="form.controls['year'].errors?.required">Debe insertar el año del articulo</mat-error>
         </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="Seleccione el Grupo" formControlName="autores" [compareWith]="compararGrupos" [multiple]="true">
+                <div class="mat-option">
+                    <input #control (keyup)="filtrarSelect($event)" matInput placeholder="Filtrar Autores">
+                </div>
+                <mat-option *ngFor="let autor of autoresFiltrados" [value]="autor">{{autor|autor}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['autores'].errors?.required">Debe seleccionar al menos un autor</mat-error>
+        </mat-form-field>
     </div>
     <div mat-dialog-actions class="boton-theme">
         <span class="spacer"></span>
